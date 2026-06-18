@@ -1,0 +1,22 @@
+from __future__ import annotations
+
+from typing import Any
+
+from dcc_mcp_core.skill import skill_entry, skill_exception, skill_success
+
+from _gltf_samples import LICENSE_NOTICE, model_files
+
+
+@skill_entry
+def main(model_name: str, **_: Any) -> dict[str, Any]:
+    try:
+        files = model_files(model_name)
+        return skill_success("glTF sample files listed", files=files, count=len(files), license=LICENSE_NOTICE)
+    except Exception as exc:
+        return skill_exception(exc, message="Failed to list glTF sample files")
+
+
+if __name__ == "__main__":
+    from dcc_mcp_core.skill import run_main
+
+    run_main(main)

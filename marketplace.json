@@ -1,0 +1,29 @@
+{
+  "name": "dcc-asset-gltf-sample-assets",
+  "version": "0.1.0",
+  "interface": {
+    "displayName": "glTF Sample Assets",
+    "description": "Khronos glTF sample model discovery and downloads."
+  },
+  "installRoot": "~/.dcc-mcp/marketplace/{dcc}/{name}",
+  "skills": [
+    {
+      "name": "dcc-asset-gltf-sample-assets",
+      "description": "Search and download Khronos glTF sample assets.",
+      "version": "0.1.0",
+      "dcc": ["maya", "blender", "houdini", "3dsmax"],
+      "tags": ["asset", "gltf", "khronos", "sample-assets", "download"],
+      "category": "Asset Providers",
+      "maintainer": "dcc-mcp",
+      "minCoreVersion": "0.18.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/dcc-mcp/dcc-asset-gltf-sample-assets",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "available"
+      }
+    }
+  ]
+}
