@@ -1,5 +1,7 @@
 # DCC-MCP glTF Sample Assets
 
+![Workflow showcase](docs/workflow-showcase.png)
+
 Khronos glTF Sample Assets discovery and download tools for DCC-MCP.
 
 This skill uses the public GitHub repository tree and raw file URLs. It is for
