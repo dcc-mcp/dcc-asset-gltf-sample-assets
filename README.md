@@ -1,6 +1,6 @@
 # DCC-MCP glTF Sample Assets
 
-![Workflow showcase](docs/workflow-showcase.png)
+![Workflow showcase](docs/images/dcc-asset-gltf-sample-assets-showcase.webp)
 
 Khronos glTF Sample Assets discovery and download tools for DCC-MCP.
 
