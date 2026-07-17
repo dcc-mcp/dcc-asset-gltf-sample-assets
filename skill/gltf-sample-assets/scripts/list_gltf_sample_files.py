@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+from pathlib import Path
+import sys
 from typing import Any
 
 from dcc_mcp_core.skill import skill_entry, skill_exception, skill_success
 
-from _gltf_samples import LICENSE_NOTICE, model_files
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
+
+from _gltf_samples import LICENSE_NOTICE, model_files  # noqa: E402
 
 
 @skill_entry
