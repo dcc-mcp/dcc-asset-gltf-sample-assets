@@ -14,42 +14,70 @@ users may continue to use the MCP endpoint.
 `dcc-mcp-cli` is the preferred control path for every shell-capable agent. If
 it is missing, ask the user before installing the latest official release:
 
-```bash
-# Linux/macOS
-curl -fsSL https://raw.githubusercontent.com/dcc-mcp/dcc-mcp-core/main/scripts/install-cli.sh | sh
+On Linux/macOS, download and inspect the installer:
 
-# Windows PowerShell
-powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/dcc-mcp/dcc-mcp-core/main/scripts/install-cli.ps1 | iex"
+```bash
+curl -fL https://raw.githubusercontent.com/dcc-mcp/dcc-mcp-core/main/scripts/install-cli.sh -o install-cli.sh
+cat install-cli.sh
+```
+
+After completing the inspection and obtaining the user's permission to install:
+
+```bash
+sh ./install-cli.sh
+```
+
+On Windows PowerShell, download and inspect the installer:
+
+```powershell
+Invoke-WebRequest https://raw.githubusercontent.com/dcc-mcp/dcc-mcp-core/main/scripts/install-cli.ps1 -OutFile .\install-cli.ps1
+Get-Content -Raw .\install-cli.ps1
+```
+
+After completing the inspection and obtaining the user's permission to install,
+run the reviewed local installer under the current execution policy:
+
+```powershell
+& .\install-cli.ps1
 ```
 
 Keep an official build current through the release manifest:
 
 ```bash
 dcc-mcp-cli update check
-dcc-mcp-cli update apply
+```
+
+Only after the user explicitly confirms the update:
+
+```bash
+dcc-mcp-cli update apply --yes
 ```
 
 `update apply` downloads and stages the latest CLI for the next launch. It
 does not update a running `dcc-mcp-server`; update that server in its own
 environment.
 
-Choose one stable `<task-id>` for the task and pass it to every tool call with
-`--agent-session-id`. This sets `_meta.agent_context.session_id`; reuse the same
-ID in `stats --session-id` after the task.
+Use `--require-gateway` for task calls so Gateway audit/stats records them.
+This fails closed instead of falling back to direct MCP. Choose one stable
+`<task-id>` and pass it to every tool call with `--agent-session-id`. This sets
+`_meta.agent_context.session_id`; reuse the same ID in `stats --session-id`
+after the task.
 
 ```bash
 dcc-mcp-cli dcc-types
 dcc-mcp-cli list
 dcc-mcp-cli search --query "<task>" --dcc-type <host>
 dcc-mcp-cli describe <tool-slug>
-dcc-mcp-cli call <tool-slug> --agent-session-id "<task-id>" --json '{"key":"value"}'
+dcc-mcp-cli call <tool-slug> --require-gateway --agent-session-id "<task-id>" --json '{"key":"value"}'
 ```
 
 If the package skill is not active, call
 `dcc-mcp-cli load-skill <skill-name> --dcc-type <host>`. After the task,
-query `dcc-mcp-cli stats --range 24h --session-id "<task-id>"` and pass only
+query `dcc-mcp-cli stats --range "<task-window>" --session-id "<task-id>"` and pass only
 bounded evidence to the `review_skill_improvement` prompt from
 `dcc-mcp-skills-creator`.
+Choose a supported `--range` covering the full task start-to-review window;
+see `dcc-mcp-cli stats --help`.
 
 
 ![Workflow showcase](docs/images/dcc-asset-gltf-sample-assets-showcase.webp)
